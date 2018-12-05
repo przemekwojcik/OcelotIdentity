@@ -1,0 +1,15 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/{route}",
+      "UpstreamPathTemplate": "/identity/{route}",
+      "UpstreamHttpMethod": [ "Get", "Options", "Post" ],
+      "DownstreamScheme": "http",
+      "ServiceName": "identity"
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration"
+  }
+}

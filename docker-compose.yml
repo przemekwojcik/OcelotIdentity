@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: .
+      dockerfile: Identity/Dockerfile
+
+  ocelotidentity:
+    image: ${DOCKER_REGISTRY-}ocelotidentity
+    build:
+      context: .
+      dockerfile: OcelotIdentity/Dockerfile
+
