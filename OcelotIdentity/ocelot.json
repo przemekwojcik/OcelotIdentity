@@ -1,15 +1,53 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/{route}",
-      "UpstreamPathTemplate": "/identity/{route}",
-      "UpstreamHttpMethod": [ "Get", "Options", "Post" ],
+      "DownstreamPathTemplate": "/",
       "DownstreamScheme": "http",
-      "ServiceName": "identity"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helloworldapp",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/a/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helloworldapp",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/a/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
+    },
+    {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/identity/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/identity/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     }
   ],
-  "GlobalConfiguration": {
-    "RequestIdKey": "OcRequestId",
-    "AdministrationPath": "/administration"
-  }
+  "GlobalConfiguration": {}
 }

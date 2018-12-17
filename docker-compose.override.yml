@@ -5,11 +5,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "7050:80"
+      - "7066:80"
 
   ocelotidentity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "7060:80"
+
+
+  helloworldapp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7055:80"
 
