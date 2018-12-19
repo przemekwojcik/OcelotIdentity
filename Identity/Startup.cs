@@ -41,8 +41,16 @@ namespace Identity
                           .AllowAnyHeader()
                           .AllowCredentials());
             });
-            var host = Configuration.GetSection("Hosts")?.GetSection("Externals")?.GetSection("CurrentUri")?.Value;
-            services.AddIdentityServer()
+            var issuerUri = Configuration.GetSection("ConnectionStrings")?.GetSection("IssuerUri")?.Value;
+            services.AddIdentityServer(options =>
+                    {
+                        options.Events.RaiseErrorEvents = true;
+                        options.Events.RaiseInformationEvents = true;
+                        options.Events.RaiseFailureEvents = true;
+                        options.Events.RaiseSuccessEvents = true;
+                        options.IssuerUri = "https://identity-test.northeurope.cloudapp.azure.com/";
+                        options.PublicOrigin = Environment.IsDevelopment() ? "" : "https://identity-test.northeurope.cloudapp.azure.com/";
+                    })
                     .AddDeveloperSigningCredential()
                     .AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
                     .AddInMemoryClients(InMemoryConfiguration.Clients())
@@ -66,8 +74,18 @@ namespace Identity
             }
 
             app.UseCors("CorsPolicy");
-            app.UseIdentityServer();
             app.UseStaticFiles();
+
+            var fordwardedHeaderOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            };
+            fordwardedHeaderOptions.KnownNetworks.Clear();
+            fordwardedHeaderOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(fordwardedHeaderOptions);
+
+            app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
         }
     }
